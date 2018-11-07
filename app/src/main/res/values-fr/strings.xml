@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_drug">ajouter medicament</string>
+    <string name="prescription_list">Ordonnance</string>
+    <string name="drug_day">Medicament du jour</string>
+    <string name="about_us">a propos de nous</string>
+</resources>

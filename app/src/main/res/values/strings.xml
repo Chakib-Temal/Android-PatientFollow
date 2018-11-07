@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Patient follow</string>
+
+    <string name="add_drug">Add drug</string>
+    <string name="prescription_list">Prescriptions</string>
+    <string name="drug_day">Drugs day</string>
+    <string name="about_us">About us</string>
+    <string name="title_activity_list_drugs">ListDrugsActivity</string>
 </resources>
