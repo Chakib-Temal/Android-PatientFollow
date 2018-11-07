@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Contacts</string>
+    <string name="action_settings">Settings</string>
+    <string name="add">add</string>
+    <string name="list">list</string>
+    <string name="title_activity_edit_contact">EditContactActivity</string>
+    <string name="firstName">firstName</string>
+    <string name="lastName">lastName</string>
+    <string name="female">female</string>
+    <string name="mal">mal</string>
+    <string name="gender">gender</string>
+    <string name="age">age</string>
+
+</resources>
