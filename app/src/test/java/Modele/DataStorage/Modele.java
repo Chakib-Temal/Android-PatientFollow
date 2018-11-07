@@ -21,5 +21,9 @@ public class Modele {
         this.PrescriptionList.add(p);
     }
 
+    public void populatePrescription(){
+        this.PrescriptionList.add(new Prescription().populateDrugs());
+    }
+
 
 }
