@@ -1,22 +1,21 @@
 package Modele.modelesClass;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Drug {
     private String name;
     private String namePhoto;
     private String type;
     private int frequencyPerDay;
-    private List<Integer> timeToTake = new ArrayList<Integer>();
+    private int [] timeTotake;
 
-    public Drug(String name, String namePhoto, String type, int frequencyPerDay, List<Integer> timeToTake) {
+    public Drug(String name, String namePhoto, String type, int frequencyPerDay, int [] timeToTake) {
         this.name = name;
         this.namePhoto = namePhoto;
         this.type = type;
         this.frequencyPerDay = frequencyPerDay;
-        this.timeToTake = timeToTake;
+        this.timeTotake = timeToTake;
     }
+
+
 
     public String getName() {
         return name;
@@ -51,17 +50,13 @@ public class Drug {
     }
 
 
-
-    public List<Integer> getTimeToTake() {
-
-        return timeToTake;
+    public int[] getTimeTotake() {
+        return timeTotake;
     }
 
-    public void setTimeToTake(List<Integer> timeToTake) {
-        this.timeToTake = timeToTake;
+    public void setTimeTotake(int[] timeTotake) {
+        this.timeTotake = timeTotake;
     }
 
-    public void addTime(int time){
-        this.timeToTake.add(time);
-    }
+
 }

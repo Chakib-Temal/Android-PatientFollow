@@ -6,18 +6,20 @@ import java.util.List;
 import Modele.modelesClass.Prescription;
 
 public class Modele {
-    private List<Prescription> drugsList = new ArrayList<Prescription>();
+    private List<Prescription> PrescriptionList = new ArrayList<Prescription>();
 
 
     public List<Prescription> getDrugsList() {
-        return drugsList;
+        return PrescriptionList;
     }
 
     public void setDrugsList(List<Prescription> drugsList) {
-        this.drugsList = drugsList;
+        this.PrescriptionList = drugsList;
     }
 
     public void addPrescription (Prescription p){
-        this.drugsList.add(p);
+        this.PrescriptionList.add(p);
     }
+
+
 }

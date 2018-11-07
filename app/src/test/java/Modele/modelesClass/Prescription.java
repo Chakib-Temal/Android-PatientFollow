@@ -17,4 +17,9 @@ public class Prescription {
     public void addDrug(Drug drug){
         this.drugList.add(drug);
     }
+
+    public void populate(){
+        this.drugList.add(new Drug("Doliprane", "doliprane.png", "pellule", 3, new int[]{1,2,0}));
+        this.drugList.add(new Drug("Lyrica", "Lyrica.png", "pellule", 2, new int[]{1,2,0}));
+    }
 }
