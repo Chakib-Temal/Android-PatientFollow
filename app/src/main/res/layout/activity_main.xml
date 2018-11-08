@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/add_drug"
+            android:text="@string/list_drug"
             android:layout_gravity="bottom"
             android:onClick="goListDrugs"
             />
