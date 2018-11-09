@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="10dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/nameDrug"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="70"
+        android:layout_gravity="center"
+        />
+
+
+    <ImageView
+        android:id="@+id/namePhotoDrug"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_weight="30"
+        android:layout_gravity="center" />
+
+</LinearLayout>

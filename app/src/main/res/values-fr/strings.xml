@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="list_drug">Medicaments</string>
     <string name="prescription_list">Ordonnance</string>
     <string name="drug_day">Medicament du jour</string>
     <string name="about_us">a propos de nous</string>
+
+    <string name="name_drug">Nom :</string>
+    <string name="description_drug">Description</string>
+    <string name="frequency_drug">Frequence par jour</string>
+    <string name="type_drug">Type</string>
+    <string name="timeToTake_drug">heure</string>
+
+
 </resources>

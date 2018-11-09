@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private Button prescriptionListButton;
     private Button drugDayButton;
     private Button aboutUsButton;
+    private Intent intent;
+    private DataBase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
          * in db instance of DataBase we store all data of applications
          */
 
-        DataBase db = new DataBase();
+        this.db = new DataBase();
 
         for (Prescription actualPerscription : db.getPrescriptionList()){
             for (Drug actualDrugs : actualPerscription.getDrugList()){
@@ -53,19 +55,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goListDrugs(View view) {
-        Intent intent = new Intent(MainActivity.this, ListDrugsActivity.class);
+        this.intent = new Intent(MainActivity.this, ListDrugsActivity.class);
+
+        intent.putExtra("db", this.db);
         startActivity(intent);
     }
 
 
     public void goListPrescription(View view) {
+        this.intent = new Intent(MainActivity.this, ListDrugsActivity.class);
+        startActivity(intent);
     }
 
     public void goListDrugDay(View view) {
-
+        this.intent = new Intent(MainActivity.this, ListDrugsActivity.class);
+        startActivity(intent);
     }
 
     public void goAboutUs(View view) {
-
+        this.intent = new Intent(MainActivity.this, ListDrugsActivity.class);
+        startActivity(intent);
     }
 }

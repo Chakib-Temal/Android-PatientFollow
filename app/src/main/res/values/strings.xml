@@ -1,9 +1,21 @@
 <resources>
     <string name="app_name">Patient follow</string>
+    <string name="title_activity_list_drugs">ListDrugsActivity</string>
+
 
     <string name="list_drug">list drug</string>
     <string name="prescription_list">Prescriptions</string>
     <string name="drug_day">Drugs day</string>
     <string name="about_us">About us</string>
-    <string name="title_activity_list_drugs">ListDrugsActivity</string>
+
+    <string name="name_drug">Name :</string>
+    <string name="description_drug">Description</string>
+    <string name="frequency_drug">Frequency per day</string>
+    <string name="type_drug">Type</string>
+    <string name="timeToTake_drug">Taking time</string>
+
+
+
+
+
 </resources>
