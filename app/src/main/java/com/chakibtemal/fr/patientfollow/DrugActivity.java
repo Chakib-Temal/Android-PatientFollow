@@ -2,12 +2,21 @@ package com.chakibtemal.fr.patientfollow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import Modele.DataStorage.DataBase;
 import Modele.modelesClass.Drug;
@@ -16,8 +25,12 @@ public class DrugActivity extends AppCompatActivity {
     private final static int REQUEST_CODE_ADD = 0;
     private final static int REQUEST_CODE_UPDATE = 1;
     private final static String DATA_BASE = "db";
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     private static String REQUEST_CODE_KEY = "requestCode" ;
     private static int REQUEST_CODE_VALUE ;
+
+    private String CURRENT_PHOTO_PATH;
+
     private DataBase db;
     private Intent intent;
     private Context context;
@@ -75,7 +88,63 @@ public class DrugActivity extends AppCompatActivity {
             this.drugImageView.setImageDrawable(drawable);
 
         }
-
-
     }
+
+
+
+    public void saveActualDrug(View view) {
+        db.getAllDrugs().set(idActualDrug, actualDrug);
+    }
+
+    public void changePicture(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            drugImageView.setImageBitmap(imageBitmap);
+            SaveImage(imageBitmap);
+
+
+            Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/Pictures/" + newName);
+            drugImageView.setImageBitmap(bitmap);
+
+        }
+    }
+
+
+
+    String newName;
+
+    private void SaveImage(Bitmap finalBitmap) {
+
+        String root = context.getFilesDir().getPath();
+
+        File myDir = new File(root + "/Pictures");
+        System.out.println("roooooot" + root);
+        myDir.mkdirs();
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String fname = "JPEG_" + timeStamp + "_";
+        newName = fname;
+        File file = new File (myDir, fname);
+        if (file.exists ()) file.delete ();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
