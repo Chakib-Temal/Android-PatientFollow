@@ -25,11 +25,8 @@ public class Prescription implements Parcelable {
         this.drugList.add(drug);
     }
 
-    public Prescription populateDrugs(){
-        List<Integer> time = new ArrayList<Integer>();
-        time.add(1);time.add(1);time.add(1);
-        this.drugList.add(new Drug("Doliprane","doliprane", "doliprane", "pellule", 3,time));
-        this.drugList.add(new Drug("Lyrica","lyrica", "lyrica", "pellule", 3, time));
+    public Prescription populateDrugs(List<Drug> drugList){
+        this.drugList = drugList;
         return this;
     }
 

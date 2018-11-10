@@ -21,10 +21,7 @@ public class Drug implements  Parcelable {
         this.type = type;
         this.frequencyPerDay = frequencyPerDay;
         this.timeToTake = timeToTake;
-
     }
-
-
 
     public String getName() {
         return name;

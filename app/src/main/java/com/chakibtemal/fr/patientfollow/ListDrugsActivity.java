@@ -86,5 +86,13 @@ public class ListDrugsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        this.intent = new Intent(context, MainActivity.class);
+        intent.putExtra(DATA_BASE, this.db);
+        startActivity(intent);
+        finish();
+    }
+
 
 }

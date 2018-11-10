@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
 import java.io.File;
 
@@ -17,34 +16,27 @@ import Modele.modelesClass.Prescription;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button addDrugButton;
-    private Button prescriptionListButton;
-    private Button drugDayButton;
-    private Button aboutUsButton;
+    private final static String DATA_BASE = "db";
     private Intent intent;
     private DataBase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String dir = getFilesDir().getAbsolutePath();
-        String root = this.getFilesDir().getPath();
-        File myDir = new File(root + "/Pictures");
-        File f0 = new File(dir, "myFile");
-        boolean d0 = f0.delete();
+        Intent intent = getIntent();
+        if (intent.hasExtra(DATA_BASE)) {
+            this.db = (DataBase) getIntent().getExtras().getParcelable(DATA_BASE);
+        } else {
+            deleteAllPictures();
+            /**
+             * in db instance of DataBase we store all data of applications
+             */
+            this.db = new DataBase(this);
+        }
 
-        this.addDrugButton          = (Button) findViewById(R.id.listDrug);
-        this.prescriptionListButton = (Button) findViewById(R.id.prescriptionList);
-        this.drugDayButton          = (Button) findViewById(R.id.drugDay);
-        this.aboutUsButton          = (Button) findViewById(R.id.aboutUs);
-
-        /**
-         * in db instance of DataBase we store all data of applications
-         */
-
-        this.db = new DataBase();
 
         for (Prescription actualPerscription : db.getPrescriptionList()){
             for (Drug actualDrugs : actualPerscription.getDrugList()){
@@ -53,11 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("------------------------------------------------");
             }
         }
-
-
-
-
-
 
 
         //Calendar rightNow = Calendar.getInstance();
@@ -74,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void goListPrescription(View view) {
-        this.intent = new Intent(MainActivity.this, ListDrugsActivity.class);
-        startActivity(intent);
+
     }
 
     public void goListDrugDay(View view) {
@@ -90,5 +76,18 @@ public class MainActivity extends AppCompatActivity {
         View snackbarView = snackbar.setActionTextColor(Color.WHITE).getView();
         snackbarView.setBackgroundColor(Color.BLACK);
         snackbar.show();
+    }
+
+    public void deleteAllPictures(){
+        String dir = getFilesDir().getAbsolutePath();
+        File myDir = new File(this.getFilesDir().getPath()+ "/Pictures");
+        if (myDir.isDirectory())
+        {
+            String[] children = myDir.list();
+            for (int i = 0; i < children.length; i++)
+            {
+                new File(myDir, children[i]).delete();
+            }
+        }
     }
 }

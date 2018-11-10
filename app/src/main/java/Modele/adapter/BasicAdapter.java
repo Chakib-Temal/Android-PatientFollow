@@ -1,8 +1,8 @@
 package Modele.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,16 +46,15 @@ public class BasicAdapter extends BaseAdapter {
         View root = inflater.inflate(R.layout.item_list_drug, null);
         Drug drug = (Drug) getItem(i);
 
-        String uri = "@mipmap/"+drug.getNamePhoto();
-        int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-        Drawable drawable = ContextCompat.getDrawable(context, imageResource);
+        String uri = drug.getNamePhoto();
+        Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/Pictures/" + uri);
 
         TextView nameDrug = (TextView) root.findViewById(R.id.nameDrug);
         ImageView imageDrug = (ImageView) root.findViewById(R.id.namePhotoDrug);
 
 
         nameDrug.setText(drug.getName());
-        imageDrug.setImageDrawable( drawable);
+        imageDrug.setImageBitmap(bitmap);
 
         return root;
     }

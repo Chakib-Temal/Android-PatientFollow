@@ -1,22 +1,26 @@
 package Modele.DataStorage;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemClock;
+
+import com.chakibtemal.fr.patientfollow.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import Modele.modelesClass.Drug;
 import Modele.modelesClass.Prescription;
+import Modele.savaPicture.SavePictureHelper;
 
 public class DataBase implements Parcelable {
 
     private List<Prescription> PrescriptionList = new ArrayList<Prescription>();
     private List<Drug> allDrugs = new ArrayList<Drug>();
 
-    public DataBase(){
-        this.populatePrescriptionStart();
-        this.populateSameDugsStart();
+    public DataBase(Context context){
+        this.populateSameDugsStart(context);
     }
 
     public List<Prescription> getPrescriptionList() {
@@ -48,15 +52,26 @@ public class DataBase implements Parcelable {
     }
 
     public void populatePrescriptionStart(){
-        this.PrescriptionList.add(new Prescription().populateDrugs());
-        this.PrescriptionList.add(new Prescription().populateDrugs());
+
     }
 
-    public void populateSameDugsStart(){
+    public void populateSameDugsStart(Context context){
         List<Integer> time = new ArrayList<Integer>();
-        time.add(1);time.add(1);time.add(1);
-        this.allDrugs.add(new Drug("Doliprane", "doliprane", "doliprane", "pellule", 3, time));
-        this.allDrugs.add(new Drug("Lyrica", "lyrica", "lyrica", "pellule", 3, time));
+        time.add(8);time.add(14);time.add(22);
+        Drug doliprane = new Drug("Doliprane", "Good Drug", "doliprane", "Capsule", 3, time);
+        Drug lyrica = new Drug("Lyrica", "Pfizer Drug", "lyrica", "Capsule", 3, time);
+
+        SavePictureHelper savePictureHelper = new SavePictureHelper(context);
+        savePictureHelper.savePrincipalPicture(doliprane, R.mipmap.doliprane);
+        SystemClock.sleep(1000);
+        savePictureHelper.savePrincipalPicture(lyrica, R.mipmap.lyrica);
+
+
+        this.allDrugs.add(doliprane);
+        this.allDrugs.add(lyrica);
+
+        this.PrescriptionList.add(new Prescription().populateDrugs(this.allDrugs));
+        this.PrescriptionList.add(new Prescription().populateDrugs(this.allDrugs));
     }
 
 
