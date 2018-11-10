@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chakibtemal.fr.patientfollow">
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -12,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +26,11 @@
             android:name=".ListDrugsActivity"
             android:label="@string/title_activity_list_drugs"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DrugActivity"></activity>
+        <activity android:name=".DrugActivity" />
+        <activity
+            android:name=".ListPerscreptionsActivity"
+            android:label="@string/title_activity_list_perscreptions"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -1,10 +1,14 @@
 package com.chakibtemal.fr.patientfollow;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import java.io.File;
 
 import Modele.DataStorage.DataBase;
 import Modele.modelesClass.Drug;
@@ -24,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String dir = getFilesDir().getAbsolutePath();
+        String root = this.getFilesDir().getPath();
+        File myDir = new File(root + "/Pictures");
+        File f0 = new File(dir, "myFile");
+        boolean d0 = f0.delete();
 
         this.addDrugButton          = (Button) findViewById(R.id.listDrug);
         this.prescriptionListButton = (Button) findViewById(R.id.prescriptionList);
@@ -48,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         //Calendar rightNow = Calendar.getInstance();
         //int currentHourIn24Format = rightNow.get(Calendar.HOUR_OF_DAY);
 
@@ -56,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void goListDrugs(View view) {
         this.intent = new Intent(MainActivity.this, ListDrugsActivity.class);
-
         intent.putExtra("db", this.db);
         startActivity(intent);
     }
@@ -73,7 +84,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goAboutUs(View view) {
-        this.intent = new Intent(MainActivity.this, ListDrugsActivity.class);
-        startActivity(intent);
+        View parentLayout = findViewById(android.R.id.content);
+        //Snackbar.make(parentLayout, "Temal_Chakib-UHA-2018", Snackbar.LENGTH_LONG).show();
+        Snackbar snackbar = Snackbar.make(parentLayout, "Contact : chakibtemal@gmail.com", Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.setActionTextColor(Color.WHITE).getView();
+        snackbarView.setBackgroundColor(Color.BLACK);
+        snackbar.show();
     }
 }

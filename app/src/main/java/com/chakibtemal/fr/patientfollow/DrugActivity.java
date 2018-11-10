@@ -113,7 +113,7 @@ public class DrugActivity extends AppCompatActivity {
             SaveImage(imageBitmap);
 
 
-            Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/Pictures/" + newName);
+            Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/Pictures/" + CURRENT_PHOTO_PATH);
             drugImageView.setImageBitmap(bitmap);
 
         }
@@ -121,7 +121,7 @@ public class DrugActivity extends AppCompatActivity {
 
 
 
-    String newName;
+
 
     private void SaveImage(Bitmap finalBitmap) {
 
@@ -133,7 +133,7 @@ public class DrugActivity extends AppCompatActivity {
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String fname = "JPEG_" + timeStamp + "_";
-        newName = fname;
+        CURRENT_PHOTO_PATH = fname;
         File file = new File (myDir, fname);
         if (file.exists ()) file.delete ();
         try {

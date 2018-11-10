@@ -15,7 +15,7 @@
     <string name="timeToTake_drug">Taking time</string>
     <string name="save">Save</string>
     <string name="changePicture">Change picture</string>
-
+    <string name="title_activity_list_perscreptions">ListPerscreptionsActivity</string>
 
 
 </resources>
