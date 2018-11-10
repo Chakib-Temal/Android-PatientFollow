@@ -71,19 +71,17 @@ public class ListDrugsActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_ADD) {
-            if (resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_ADD && resultCode == RESULT_OK) {
 
-            }
-        }else if (requestCode == REQUEST_CODE_UPDATE){
-            if (resultCode == RESULT_OK){
+        }else if (requestCode == REQUEST_CODE_UPDATE && resultCode == RESULT_OK){
 
-            }
+            this.db = (DataBase) data.getParcelableExtra(DATA_BASE);
+            this.listDrug.clear();
+            this.listDrug.addAll(db.getAllDrugs());
+            adapter.notifyDataSetChanged();
         }
-
     }
 
     @Override
@@ -93,6 +91,4 @@ public class ListDrugsActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-
 }

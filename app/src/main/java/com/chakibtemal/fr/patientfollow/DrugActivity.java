@@ -1,5 +1,6 @@
 package com.chakibtemal.fr.patientfollow;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,8 +23,6 @@ public class DrugActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static String REQUEST_CODE_KEY = "requestCode" ;
     private static int REQUEST_CODE_VALUE ;
-
-    private String CURRENT_PHOTO_NAME;
 
     private DataBase db;
     private Intent intent;
@@ -106,19 +105,27 @@ public class DrugActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             SaveImage(imageBitmap);
-            Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/Pictures/" + CURRENT_PHOTO_NAME);
+            Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/Pictures/" + actualDrug.getNamePhoto());
             drugImageView.setImageBitmap(bitmap);
-
         }
     }
 
-
-
-
-
     public void SaveImage(Bitmap finalBitmap) {
         SavePictureHelper savePictureHelper = new SavePictureHelper(context);
-        CURRENT_PHOTO_NAME = savePictureHelper.saveImage(finalBitmap);
+        actualDrug.setNamePhoto(savePictureHelper.saveImage(finalBitmap));
+        this.db.getAllDrugs().set(idActualDrug, this.actualDrug);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (REQUEST_CODE_VALUE == REQUEST_CODE_ADD) {
+
+
+        } else if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE) {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra(DATA_BASE, db);
+            setResult(Activity.RESULT_OK,returnIntent);
+            finish();
+        }
+    }
 }
