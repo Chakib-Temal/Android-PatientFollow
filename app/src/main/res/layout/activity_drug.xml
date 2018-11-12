@@ -126,32 +126,41 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="center" />
-
-    <LinearLayout
-        android:id="@+id/ParentSaveButton"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <Button
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:id="@+id/ParentSaveButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="@string/changePicture"
-            android:onClick="changePicture"/>
+            android:orientation="vertical"
+
+            >
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/changePicture"
+                android:onClick="changePicture"/>
 
 
-        <Button
-            android:id="@+id/saveButton"
-            android:text="@string/save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:onClick="saveActualDrug"
-            />
+            <Button
+                android:id="@+id/saveButton"
+                android:text="@string/save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:onClick="saveActualDrug"
+                />
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
 
 
 
