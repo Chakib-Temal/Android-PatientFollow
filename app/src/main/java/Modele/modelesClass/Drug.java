@@ -14,6 +14,10 @@ public class Drug implements  Parcelable {
     private int frequencyPerDay;
     private List<Integer> timeToTake;
 
+    public Drug(){
+
+    }
+
     public Drug(String name,String description, String namePhoto, String type, int frequencyPerDay, List<Integer> timeToTake) {
         this.name = name;
         this.description = description;
@@ -36,7 +40,7 @@ public class Drug implements  Parcelable {
     }
 
     public void setDescription(String description) {
-        description = description;
+        this.description = description;
     }
 
     public String getNamePhoto() {

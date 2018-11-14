@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import Modele.DataStorage.DataBase;
+import java.util.ArrayList;
+import java.util.List;
+
 import Modele.modelesClass.Drug;
 import Modele.savaPicture.SavePictureHelper;
 
@@ -24,7 +26,6 @@ public class DrugActivity extends AppCompatActivity {
     private static String REQUEST_CODE_KEY = "requestCode" ;
     private static int REQUEST_CODE_VALUE ;
 
-    private DataBase db;
     private Intent intent;
     private Context context;
     private int idActualDrug;
@@ -37,14 +38,14 @@ public class DrugActivity extends AppCompatActivity {
     private EditText takingTimeEditText;
     private ImageView drugImageView;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drug);
         this.context = this;
         intent = getIntent();
-
-        this.db = (DataBase) intent.getExtras().getParcelable(DATA_BASE);
         REQUEST_CODE_VALUE = (int) intent.getExtras().getInt(REQUEST_CODE_KEY);
 
 
@@ -59,16 +60,20 @@ public class DrugActivity extends AppCompatActivity {
 
         if (REQUEST_CODE_VALUE == REQUEST_CODE_ADD){
             this.nameDrugEditText.setHint("add name...");
+            this.actualDrug = new Drug();
+            this.takingTimeEditText.setHint("exemple : 8/10/14");
 
         }
         else if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE){
-            this.idActualDrug = this.intent.getIntExtra("idActualDrug", 99);
-            this.actualDrug = db.getAllDrugs().get(idActualDrug);
+            this.actualDrug = (Drug) this.intent.getParcelableExtra("Drug");
+            this.idActualDrug = intent.getIntExtra("idActualDrug", 1000);
 
             this.nameDrugEditText.setText(actualDrug.getName());
+
             this.descriptionDrugEditText.setText(actualDrug.getDescription());
             this.typeDrugEditText.setText(actualDrug.getType());
             this.frequecyDrugEditText.setText(Integer.toString(actualDrug.getFrequencyPerDay()));
+
             String timeToTake= "";
             for (int i=0 ; i < actualDrug.getTimeToTake().size(); i++){
                 timeToTake += Integer.toString(actualDrug.getTimeToTake().get(i)) + " H / ";
@@ -77,18 +82,60 @@ public class DrugActivity extends AppCompatActivity {
 
             String uri = actualDrug.getNamePhoto();
             Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/Pictures/" + uri);
-            drugImageView.setImageBitmap(bitmap);
-            //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-            //Drawable drawable = ContextCompat.getDrawable(context, imageResource);
-            //this.drugImageView.setImageDrawable(drawable);
+            this.drugImageView.setImageBitmap(bitmap);
+
+            this.takingTimeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (b) {
+                        takingTimeEditText.setTextColor(getResources().getColor(R.color.colorRed));
+                    }
+                }
+            });
 
         }
     }
 
-
-
+    /**
+     * Event save Button
+     */
     public void saveActualDrug(View view) {
-        db.getAllDrugs().set(idActualDrug, actualDrug);
+        try {
+            actualDrug.setName(nameDrugEditText.getText().toString());
+            actualDrug.setDescription(descriptionDrugEditText.getText().toString());
+            actualDrug.setType(typeDrugEditText.getText().toString());
+            actualDrug.setFrequencyPerDay((int) Integer.parseInt(frequecyDrugEditText.getText().toString()));
+
+            if (REQUEST_CODE_VALUE == REQUEST_CODE_ADD) {
+                String[] paths = takingTimeEditText.getText().toString().split("/");
+                List<Integer> time = new ArrayList<Integer>();
+                for (int i = 0; i < paths.length ; i++){
+                    time.add(Integer.valueOf(paths[i])) ;
+                }
+                actualDrug.setTimeToTake(time);
+
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("Drug", actualDrug);
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
+
+            } else if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE) {
+                String[] paths = takingTimeEditText.getText().toString().split(" H / ");
+                List<Integer> time = new ArrayList<Integer>();
+                for (int i = 0; i < paths.length ; i++){
+                    time.add(Integer.valueOf(paths[i])) ;
+                }
+                actualDrug.setTimeToTake(time);
+
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("Drug", actualDrug);
+                returnIntent.putExtra("idActualDrug", idActualDrug);
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
+            }
+        }catch (Exception e){
+            e.getStackTrace();
+        }
     }
 
     public void changePicture(View view) {
@@ -97,7 +144,6 @@ public class DrugActivity extends AppCompatActivity {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -113,19 +159,6 @@ public class DrugActivity extends AppCompatActivity {
     public void SaveImage(Bitmap finalBitmap) {
         SavePictureHelper savePictureHelper = new SavePictureHelper(context);
         actualDrug.setNamePhoto(savePictureHelper.saveImage(finalBitmap));
-        this.db.getAllDrugs().set(idActualDrug, this.actualDrug);
-    }
 
-    @Override
-    public void onBackPressed() {
-        if (REQUEST_CODE_VALUE == REQUEST_CODE_ADD) {
-
-
-        } else if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE) {
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra(DATA_BASE, db);
-            setResult(Activity.RESULT_OK,returnIntent);
-            finish();
-        }
     }
 }

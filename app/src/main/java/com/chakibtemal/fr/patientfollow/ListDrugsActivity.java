@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.List;
-
 import Modele.DataStorage.DataBase;
 import Modele.adapter.BasicAdapter;
 import Modele.modelesClass.Drug;
@@ -19,7 +17,6 @@ import Modele.modelesClass.Drug;
 public class ListDrugsActivity extends AppCompatActivity {
     private DataBase db;
     private ListView listViewDrug;
-    private List<Drug> listDrug;
     private BasicAdapter adapter;
 
     private Intent intent;
@@ -40,10 +37,8 @@ public class ListDrugsActivity extends AppCompatActivity {
 
         this.context = this;
         this.db = (DataBase) getIntent().getExtras().getParcelable(DATA_BASE);
-        this.listDrug = db.getAllDrugs();
 
-
-        this.adapter = new BasicAdapter(this.listDrug, this);
+        this.adapter = new BasicAdapter(db.getAllDrugs(), this);
         this.listViewDrug = (ListView) findViewById(R.id.listViewDrugs);
         this.listViewDrug.setAdapter(adapter);
 
@@ -52,7 +47,7 @@ public class ListDrugsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent = new Intent(context,DrugActivity.class);
-                intent.putExtra(DATA_BASE, db);
+                //intent.putExtra(DATA_BASE, db);
                 intent.putExtra(REQUEST_CODE, REQUEST_CODE_ADD);
                 startActivityForResult(intent, REQUEST_CODE_ADD);
             }
@@ -61,27 +56,43 @@ public class ListDrugsActivity extends AppCompatActivity {
         this.listViewDrug.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 intent = new Intent(context,DrugActivity.class);
-                intent.putExtra(DATA_BASE, db);
+
+                intent.putExtra("Drug", db.getAllDrugs().get(i));
                 intent.putExtra(REQUEST_CODE, REQUEST_CODE_UPDATE);
                 intent.putExtra("idActualDrug", i );
                 startActivityForResult(intent, REQUEST_CODE_UPDATE);
             }
         });
 
+        this.listViewDrug.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                db.deleteDrug(i);
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == REQUEST_CODE_ADD && resultCode == RESULT_OK) {
+            this.db.getAllDrugs().add((Drug) data.getParcelableExtra("Drug"));
+
 
         }else if (requestCode == REQUEST_CODE_UPDATE && resultCode == RESULT_OK){
-
-            this.db = (DataBase) data.getParcelableExtra(DATA_BASE);
-            this.listDrug.clear();
-            this.listDrug.addAll(db.getAllDrugs());
-            adapter.notifyDataSetChanged();
+            Drug drug = (Drug) data.getParcelableExtra("Drug");
+            int id = data.getIntExtra("idActualDrug", 1000);
+            db.updateDrug(drug, id);
         }
+
+        adapter.notifyDataSetChanged();
     }
 
     @Override

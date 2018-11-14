@@ -93,6 +93,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:id="@+id/drugFrequencyPerDey"
+            android:inputType="number"
             android:layout_weight="75"
             />
 
