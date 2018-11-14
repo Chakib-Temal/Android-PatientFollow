@@ -30,7 +30,8 @@
         <activity
             android:name=".ListPerscreptionsActivity"
             android:label="@string/title_activity_list_perscreptions"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".DrugDayActivity"></activity>
     </application>
 
 </manifest>

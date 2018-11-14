@@ -17,8 +17,8 @@ import java.util.List;
 import Modele.modelesClass.Drug;
 
 public class BasicAdapter extends BaseAdapter {
-    private List<Drug> listDrug;
-    private Context context;
+    protected List<Drug> listDrug;
+    protected Context context;
 
     public BasicAdapter(List<Drug> listDrug, Context context) {
         this.listDrug = listDrug;

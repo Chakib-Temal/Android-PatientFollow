@@ -3,11 +3,13 @@ package com.chakibtemal.fr.patientfollow;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import Modele.DataStorage.DataBase;
 import Modele.modelesClass.Drug;
@@ -17,6 +19,7 @@ import Modele.modelesClass.Prescription;
 public class MainActivity extends AppCompatActivity {
 
     private final static String DATA_BASE = "db";
+    private final static String DATA_PERSCRETION = "perscreption";
     private Intent intent;
     private DataBase db;
 
@@ -65,7 +68,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goListDrugDay(View view) {
-        this.intent = new Intent(MainActivity.this, ListDrugsActivity.class);
+        this.intent = new Intent(MainActivity.this, DrugDayActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(DATA_PERSCRETION, (ArrayList<? extends Parcelable>) this.db.getPrescriptionList());
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

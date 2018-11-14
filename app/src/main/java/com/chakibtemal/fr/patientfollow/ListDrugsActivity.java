@@ -47,7 +47,6 @@ public class ListDrugsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent = new Intent(context,DrugActivity.class);
-                //intent.putExtra(DATA_BASE, db);
                 intent.putExtra(REQUEST_CODE, REQUEST_CODE_ADD);
                 startActivityForResult(intent, REQUEST_CODE_ADD);
             }
@@ -56,9 +55,7 @@ public class ListDrugsActivity extends AppCompatActivity {
         this.listViewDrug.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 intent = new Intent(context,DrugActivity.class);
-
                 intent.putExtra("Drug", db.getAllDrugs().get(i));
                 intent.putExtra(REQUEST_CODE, REQUEST_CODE_UPDATE);
                 intent.putExtra("idActualDrug", i );
@@ -84,7 +81,6 @@ public class ListDrugsActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE_ADD && resultCode == RESULT_OK) {
             this.db.getAllDrugs().add((Drug) data.getParcelableExtra("Drug"));
-
 
         }else if (requestCode == REQUEST_CODE_UPDATE && resultCode == RESULT_OK){
             Drug drug = (Drug) data.getParcelableExtra("Drug");
