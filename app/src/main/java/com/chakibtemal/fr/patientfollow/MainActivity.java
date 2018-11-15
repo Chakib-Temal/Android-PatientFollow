@@ -10,6 +10,7 @@ import android.view.View;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import Modele.DataStorage.DataBase;
 import Modele.modelesClass.Drug;
@@ -50,27 +51,33 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        //Calendar rightNow = Calendar.getInstance();
-        //int currentHourIn24Format = rightNow.get(Calendar.HOUR_OF_DAY);
-
 
     }
 
     public void goListDrugs(View view) {
         this.intent = new Intent(MainActivity.this, ListDrugsActivity.class);
-        intent.putExtra("db", this.db);
+        intent.putExtra(DATA_BASE, this.db);
         startActivity(intent);
     }
 
 
     public void goListPrescription(View view) {
-
+        this.intent = new Intent(MainActivity.this, ListPerscreptionsActivity.class);
+        intent.putExtra(DATA_BASE, this.db);
+        startActivity(intent);
     }
 
     public void goListDrugDay(View view) {
         this.intent = new Intent(MainActivity.this, DrugDayActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(DATA_PERSCRETION, (ArrayList<? extends Parcelable>) this.db.getPrescriptionList());
+        List<Prescription> prescriptionsList = new ArrayList<Prescription>();
+        for (Prescription prescription : this.db.getPrescriptionList()){
+            if(prescription.isActivated()){
+                prescriptionsList.add(prescription);
+            }
+        }
+
+        bundle.putParcelableArrayList(DATA_PERSCRETION, (ArrayList<? extends Parcelable>) prescriptionsList);
         intent.putExtras(bundle);
         startActivity(intent);
     }

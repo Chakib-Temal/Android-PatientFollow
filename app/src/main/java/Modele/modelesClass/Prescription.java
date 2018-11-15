@@ -1,5 +1,6 @@
 package Modele.modelesClass;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,9 +9,11 @@ import java.util.List;
 
 public class Prescription implements Parcelable {
     private List<Drug> drugList;
+    private boolean isActivated;
 
-    public Prescription(){
+    public Prescription() {
         this.drugList = new ArrayList<Drug>();
+        this.isActivated = true;
     }
 
     public List<Drug> getDrugList() {
@@ -21,14 +24,23 @@ public class Prescription implements Parcelable {
         this.drugList = drugList;
     }
 
-    public void addDrug(Drug drug){
+    public void addDrug(Drug drug) {
         this.drugList.add(drug);
     }
 
-    public Prescription populateDrugs(List<Drug> drugList){
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+
+    public Prescription populateDrugs(List<Drug> drugList) {
         this.drugList = drugList;
         return this;
     }
+
 
     protected Prescription(Parcel in) {
         if (in.readByte() == 0x01) {
@@ -37,6 +49,7 @@ public class Prescription implements Parcelable {
         } else {
             drugList = null;
         }
+        isActivated = in.readByte() != 0x00;
     }
 
     @Override
@@ -52,6 +65,7 @@ public class Prescription implements Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeList(drugList);
         }
+        dest.writeByte((byte) (isActivated ? 0x01 : 0x00));
     }
 
     @SuppressWarnings("unused")

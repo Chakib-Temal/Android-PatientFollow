@@ -53,7 +53,7 @@ public class AdapterDrugDay extends BaseAdapter {
 
 
         nameDrug.setText(drug.getName());
-        hoursDrug.setText(Integer.toString(drug.getTakeHours()));
+        hoursDrug.setText(Integer.toString(drug.getTakeHours()) + " H");
 
         Calendar rightNow = Calendar.getInstance();
         int currentHourIn24Format = rightNow.get(Calendar.HOUR_OF_DAY);

@@ -69,7 +69,7 @@ public class DataBase implements Parcelable {
 
     public void populateSameDugsStart(Context context){
         List<Integer> time = new ArrayList<Integer>();
-        time.add(8);time.add(14);time.add(22);
+        time.add(0);time.add(12);time.add(22);
         Drug doliprane = new Drug("Doliprane", "Good Drug", "doliprane", "Capsule", 3, time);
         Drug lyrica = new Drug("Lyrica", "Pfizer Drug", "lyrica", "Capsule", 3, time);
 

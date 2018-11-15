@@ -2,24 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="10dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/body">
 
     <TextView
-        android:id="@+id/nameDrug"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_weight="70"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
-
-
-    <ImageView
-        android:id="@+id/namePhotoDrug"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_weight="30"
-        android:layout_gravity="center"
-        />
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:gravity="center"
+        android:id="@+id/idPrescription"/>
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_weight="70"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:gravity="center"
+        android:id="@+id/listDrug"/>
 
 </LinearLayout>
