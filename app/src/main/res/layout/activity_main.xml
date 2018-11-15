@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@mipmap/drug720">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
 
         <Button
             android:id="@+id/listDrug"
+            android:background="@drawable/my_button_bg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -25,6 +27,7 @@
 
         <Button
             android:id="@+id/prescriptionList"
+            android:background="@drawable/my_button_bg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -44,6 +47,7 @@
 
         <Button
             android:id="@+id/drugDay"
+            android:background="@drawable/my_button_bg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -54,6 +58,7 @@
 
         <Button
             android:id="@+id/aboutUs"
+            android:background="@drawable/my_button_bg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
