@@ -16,7 +16,34 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/colorClearBlue"
+                android:text="@string/activated"
+                android:background="#000000"
+                android:layout_weight="50"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/notActivated"
+                android:textColor="@color/colorBlank"
+                android:gravity="center"
+                android:background="#000000"
+                android:layout_weight="50"/>
+        </LinearLayout>
+
+
+
 
     </android.support.design.widget.AppBarLayout>
 

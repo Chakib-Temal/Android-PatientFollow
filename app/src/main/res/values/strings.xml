@@ -17,5 +17,12 @@
     <string name="changePicture">Change picture</string>
     <string name="title_activity_list_perscreptions">ListPerscreptionsActivity</string>
 
+    <string name="activated">Activated</string>
+    <string name="notActivated">Not Activated</string>
+
+    <string name="alreadyPassed">Passed</string>
+    <string name="now">Now</string>
+    <string name="after">After</string>
+
 
 </resources>

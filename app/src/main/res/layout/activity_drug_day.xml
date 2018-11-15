@@ -4,8 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".DrugDayActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/colorRed"
+            android:text="@string/alreadyPassed"
+            android:background="#000000"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/now"
+            android:textColor="@color/colorYelow"
+            android:gravity="center"
+            android:background="#000000"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/after"
+            android:textColor="@color/colorGreen"
+            android:gravity="center"
+            android:background="#000000"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"

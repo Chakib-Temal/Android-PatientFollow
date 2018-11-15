@@ -14,4 +14,10 @@
     <string name="save">Sauvegarder</string>
     <string name="changePicture">Changer photo</string>
 
+    <string name="activated">Activer</string>
+    <string name="notActivated">Non activer</string>
+
+    <string name="alreadyPassed">Passé</string>
+    <string name="now">Maintenant</string>
+    <string name="after">Après</string>
 </resources>
