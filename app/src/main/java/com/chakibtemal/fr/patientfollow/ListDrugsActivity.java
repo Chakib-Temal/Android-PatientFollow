@@ -66,6 +66,17 @@ public class ListDrugsActivity extends AppCompatActivity {
         this.listViewDrug.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Drug actualDrug = db.getAllDrugs().get(i);
+                String nameDrug = actualDrug.getName();
+
+                for (int t = 0 ; t < db.getPrescriptionList().size(); t++){
+                    for (int j= 0 ; j < db.getPrescriptionList().get(t).getDrugList().size(); j++){
+                        if (db.getPrescriptionList().get(t).getDrugList().get(j).getName().equals(nameDrug)){
+                            db.getPrescriptionList().get(t).getDrugList().remove(j);
+                        }
+                    }
+                }
+
                 db.deleteDrug(i);
                 adapter.notifyDataSetChanged();
                 return true;
