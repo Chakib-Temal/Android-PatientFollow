@@ -51,9 +51,6 @@ public class DataBase implements Parcelable {
         this.PrescriptionList.add(p);
     }
 
-    public void populatePrescriptionStart(){
-
-    }
 
     public void updateDrug(Drug drug, int id){
         this.allDrugs.set(id,drug);
@@ -66,6 +63,15 @@ public class DataBase implements Parcelable {
     public void addDrug(Drug drug){
         this.allDrugs.add(drug);
     }
+
+    public void updatePrescription (Prescription prescription, int id){
+        this.getPrescriptionList().set(id, prescription);
+    }
+
+    public void deletePrescription(int i){
+        this.getPrescriptionList().remove(i);
+    }
+
 
     public void populateSameDugsStart(Context context){
         List<Integer> time = new ArrayList<Integer>();

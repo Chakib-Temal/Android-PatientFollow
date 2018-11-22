@@ -2,6 +2,8 @@
     <string name="app_name">Patient follow</string>
     <string name="title_activity_list_drugs">ListDrugsActivity</string>
 
+    <string name="DATA_BASE">db</string>
+
 
     <string name="list_drug">list drug</string>
     <string name="prescription_list">Prescriptions</string>
@@ -23,6 +25,7 @@
     <string name="alreadyPassed">Passed</string>
     <string name="now">Now</string>
     <string name="after">After</string>
+    <string name="title_activity_list_drug_prescreption">ListDrugPrescreptionActivity</string>
 
 
 </resources>

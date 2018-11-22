@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Modele.DataStorage.DataBase;
+import Modele.Ressources.Ressources;
 import Modele.modelesClass.Drug;
 import Modele.modelesClass.Prescription;
 
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent.hasExtra(DATA_BASE)) {
-            this.db = (DataBase) getIntent().getExtras().getParcelable(DATA_BASE);
+            this.db = (DataBase) getIntent().getExtras().getParcelable(Ressources.getNameOfRessource(this, R.string.DATA_BASE));
         } else {
             deleteAllPictures();
             /**

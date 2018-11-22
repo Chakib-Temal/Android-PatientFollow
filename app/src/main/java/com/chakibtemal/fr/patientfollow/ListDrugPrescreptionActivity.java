@@ -1,5 +1,6 @@
 package com.chakibtemal.fr.patientfollow;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,46 +11,57 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import Modele.DataStorage.DataBase;
-import Modele.Ressources.Ressources;
 import Modele.adapter.BasicAdapter;
-import Modele.modelesClass.Drug;
+import Modele.modelesClass.Prescription;
 
-public class ListDrugsActivity extends AppCompatActivity {
-    private DataBase db;
+public class ListDrugPrescreptionActivity extends AppCompatActivity {
+
     private ListView listViewDrug;
     private BasicAdapter adapter;
 
-    private Intent intent;
+    private Intent intent ;
     private Context context;
-
+    private Prescription actualPrescription;
 
     private final static int REQUEST_CODE_ADD = 0;
     private final static int REQUEST_CODE_UPDATE = 1;
+    private int idActualPrescription;
+    private int REQUEST_CODE_VALUE = 22 ;
+    private static String REQUEST_CODE_KEY = "requestCode" ;
     private final static String REQUEST_CODE = "requestCode";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_drugs);
+        setContentView(R.layout.activity_list_drug_prescreption);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
         this.context = this;
-        this.db = (DataBase) getIntent().getExtras().getParcelable(Ressources.getNameOfRessource(this, R.string.DATA_BASE));
+        intent = getIntent();
 
-        this.adapter = new BasicAdapter(db.getAllDrugs(), this);
-        this.listViewDrug = (ListView) findViewById(R.id.listViewDrugs);
-        this.listViewDrug.setAdapter(adapter);
+        REQUEST_CODE_VALUE = (int) intent.getExtras().getInt(REQUEST_CODE_KEY, 22);
+        this.listViewDrug = (ListView) findViewById(R.id.listDrugsPrescription);
+
+        if (REQUEST_CODE_VALUE == REQUEST_CODE_ADD){
+
+
+        } else if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE){
+            this.actualPrescription = (Prescription) this.intent.getParcelableExtra("Prescripton");
+            this.idActualPrescription = intent.getIntExtra("idActualPrescription", 22);
+            System.out.println("----------------" + idActualPrescription);
+            this.adapter = new BasicAdapter(this.actualPrescription.getDrugList(), this);
+            this.listViewDrug.setAdapter(adapter);
+        }
+
+
 
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(context,DrugActivity.class);
-                intent.putExtra(REQUEST_CODE, REQUEST_CODE_ADD);
-                startActivityForResult(intent, REQUEST_CODE_ADD);
+
             }
         });
 
@@ -57,7 +69,7 @@ public class ListDrugsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 intent = new Intent(context,DrugActivity.class);
-                intent.putExtra("Drug", db.getAllDrugs().get(i));
+                intent.putExtra("Drug", actualPrescription.getDrugList().get(i));
                 intent.putExtra(REQUEST_CODE, REQUEST_CODE_UPDATE);
                 intent.putExtra("idActualDrug", i );
                 startActivityForResult(intent, REQUEST_CODE_UPDATE);
@@ -67,18 +79,7 @@ public class ListDrugsActivity extends AppCompatActivity {
         this.listViewDrug.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Drug actualDrug = db.getAllDrugs().get(i);
-                String nameDrug = actualDrug.getName();
-
-                for (int t = 0 ; t < db.getPrescriptionList().size(); t++){
-                    for (int j = 0 ; j < db.getPrescriptionList().get(t).getDrugList().size(); j++){
-                        if (db.getPrescriptionList().get(t).getDrugList().get(j).getName().equals(nameDrug)){
-                            db.getPrescriptionList().get(t).getDrugList().remove(j);
-                        }
-                    }
-                }
-
-                db.deleteDrug(i);
+                actualPrescription.deleteDrug(i);
                 adapter.notifyDataSetChanged();
                 return true;
             }
@@ -92,12 +93,12 @@ public class ListDrugsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_CODE_ADD && resultCode == RESULT_OK) {
-            this.db.getAllDrugs().add((Drug) data.getParcelableExtra("Drug"));
+            //this.db.getAllDrugs().add((Drug) data.getParcelableExtra("Drug"));
 
         }else if (requestCode == REQUEST_CODE_UPDATE && resultCode == RESULT_OK){
-            Drug drug = (Drug) data.getParcelableExtra("Drug");
-            int id = data.getIntExtra("idActualDrug", 1000);
-            db.updateDrug(drug, id);
+            //Drug drug = (Drug) data.getParcelableExtra("Drug");
+            //int id = data.getIntExtra("idActualDrug", 1000);
+            //db.updateDrug(drug, id);
         }
 
         adapter.notifyDataSetChanged();
@@ -105,9 +106,18 @@ public class ListDrugsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.intent = new Intent(context, MainActivity.class);
-        intent.putExtra(Ressources.getNameOfRessource(this, R.string.DATA_BASE), this.db);
-        startActivity(intent);
-        finish();
+        if (REQUEST_CODE_VALUE == REQUEST_CODE_ADD) {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("Prescription", actualPrescription);
+            setResult(Activity.RESULT_OK,returnIntent);
+            finish();
+        } else if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE) {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("Prescription", actualPrescription);
+            returnIntent.putExtra("idActualPrescription", idActualPrescription);
+            setResult(Activity.RESULT_OK,returnIntent);
+            finish();
+        }
     }
+
 }

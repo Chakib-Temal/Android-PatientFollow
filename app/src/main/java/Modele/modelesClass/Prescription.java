@@ -41,6 +41,9 @@ public class Prescription implements Parcelable {
         return this;
     }
 
+    public void deleteDrug(int i){
+        this.getDrugList().remove(i);
+    }
 
     protected Prescription(Parcel in) {
         if (in.readByte() == 0x01) {
