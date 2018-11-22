@@ -40,23 +40,24 @@ public class ListDrugPrescreptionActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         this.context = this;
         intent = getIntent();
-
         REQUEST_CODE_VALUE = (int) intent.getExtras().getInt(REQUEST_CODE_KEY, 22);
-        this.listViewDrug = (ListView) findViewById(R.id.listDrugsPrescription);
+
 
         if (REQUEST_CODE_VALUE == REQUEST_CODE_ADD){
-
+            this.listViewDrug = (ListView) findViewById(R.id.listDrugsPrescription);
 
         } else if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE){
+            this.listViewDrug = (ListView) findViewById(R.id.listDrugsPrescription);
             this.actualPrescription = (Prescription) this.intent.getParcelableExtra("Prescripton");
             this.idActualPrescription = intent.getIntExtra("idActualPrescription", 22);
-            System.out.println("----------------" + idActualPrescription);
             this.adapter = new BasicAdapter(this.actualPrescription.getDrugList(), this);
             this.listViewDrug.setAdapter(adapter);
+        }else {
+            /**
+             * Here we will add a new Drug to the Prescription
+             */
+
         }
-
-
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,24 +101,19 @@ public class ListDrugPrescreptionActivity extends AppCompatActivity {
             //int id = data.getIntExtra("idActualDrug", 1000);
             //db.updateDrug(drug, id);
         }
-
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onBackPressed() {
-        if (REQUEST_CODE_VALUE == REQUEST_CODE_ADD) {
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("Prescription", actualPrescription);
-            setResult(Activity.RESULT_OK,returnIntent);
-            finish();
-        } else if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE) {
+         if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE) {
             Intent returnIntent = new Intent();
             returnIntent.putExtra("Prescription", actualPrescription);
             returnIntent.putExtra("idActualPrescription", idActualPrescription);
             setResult(Activity.RESULT_OK,returnIntent);
             finish();
-        }
+        }else {
+             super.onBackPressed();
+         }
     }
-
 }
