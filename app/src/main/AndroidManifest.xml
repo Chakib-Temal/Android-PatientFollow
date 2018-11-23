@@ -35,7 +35,8 @@
         <activity
             android:name=".ListDrugPrescreptionActivity"
             android:label="@string/title_activity_list_drug_prescreption"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".DisplayDrugActivity"></activity>
     </application>
 
 </manifest>

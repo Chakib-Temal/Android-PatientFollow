@@ -69,11 +69,9 @@ public class ListDrugPrescreptionActivity extends AppCompatActivity {
         this.listViewDrug.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                intent = new Intent(context,DrugActivity.class);
+                intent = new Intent(context,DisplayDrugActivity.class);
                 intent.putExtra("Drug", actualPrescription.getDrugList().get(i));
-                intent.putExtra(REQUEST_CODE, REQUEST_CODE_UPDATE);
-                intent.putExtra("idActualDrug", i );
-                startActivityForResult(intent, REQUEST_CODE_UPDATE);
+                startActivity(intent);
             }
         });
 
