@@ -107,7 +107,7 @@ public class ListDrugPrescreptionActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Drug strName = arrayAdapter.getItem(which);
                         AlertDialog.Builder builderInner = new AlertDialog.Builder(context);
-                        builderInner.setMessage(strName.getName());
+                        builderInner.setMessage(strName.getName() + " " + strName.getTimeToTake());
                         actualPrescription.addDrug(strName);
                         adapter.notifyDataSetChanged();
                         builderInner.setTitle("Your Selected Item is");

@@ -77,7 +77,7 @@ public class Drug implements  Parcelable {
 
     @Override
     public String toString() {
-        return this.name;
+        return this.name + " " + this.getTimeToTake();
     }
 
     @Override
