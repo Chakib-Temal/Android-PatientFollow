@@ -51,6 +51,9 @@ public class DataBase implements Parcelable {
         this.PrescriptionList.add(p);
     }
 
+    public  void removePrescreption (int id){
+        this.getPrescriptionList().remove(id);
+    }
 
     public void updateDrug(Drug drug, int id){
         this.allDrugs.set(id,drug);

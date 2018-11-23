@@ -2,16 +2,23 @@ package com.chakibtemal.fr.patientfollow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Modele.adapter.BasicAdapter;
+import Modele.modelesClass.Drug;
 import Modele.modelesClass.Prescription;
 
 public class ListDrugPrescreptionActivity extends AppCompatActivity {
@@ -22,6 +29,7 @@ public class ListDrugPrescreptionActivity extends AppCompatActivity {
     private Intent intent ;
     private Context context;
     private Prescription actualPrescription;
+    private List<Drug> allDrugsApplications = new ArrayList<Drug>();
 
     private final static int REQUEST_CODE_ADD = 0;
     private final static int REQUEST_CODE_UPDATE = 1;
@@ -41,30 +49,22 @@ public class ListDrugPrescreptionActivity extends AppCompatActivity {
         this.context = this;
         intent = getIntent();
         REQUEST_CODE_VALUE = (int) intent.getExtras().getInt(REQUEST_CODE_KEY, 22);
+        this.allDrugsApplications = intent.getParcelableArrayListExtra("Drugs");
 
 
         if (REQUEST_CODE_VALUE == REQUEST_CODE_ADD){
+            this.actualPrescription = (Prescription) this.intent.getParcelableExtra("Prescripton");
             this.listViewDrug = (ListView) findViewById(R.id.listDrugsPrescription);
 
         } else if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE){
+
             this.listViewDrug = (ListView) findViewById(R.id.listDrugsPrescription);
             this.actualPrescription = (Prescription) this.intent.getParcelableExtra("Prescripton");
             this.idActualPrescription = intent.getIntExtra("idActualPrescription", 22);
-            this.adapter = new BasicAdapter(this.actualPrescription.getDrugList(), this);
-            this.listViewDrug.setAdapter(adapter);
-        }else {
-            /**
-             * Here we will add a new Drug to the Prescription
-             */
-
         }
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        this.adapter = new BasicAdapter(this.actualPrescription.getDrugList(), this);
+        this.listViewDrug.setAdapter(adapter);
 
         this.listViewDrug.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -85,10 +85,46 @@ public class ListDrugPrescreptionActivity extends AppCompatActivity {
                 return true;
             }
         });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+                builderSingle.setIcon(R.drawable.ic_launcher_background);
+                builderSingle.setTitle("Select One Name:-");
+
+                final ArrayAdapter<Drug> arrayAdapter = new ArrayAdapter<Drug>(context, android.R.layout.select_dialog_singlechoice, allDrugsApplications);
+
+
+                builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Drug strName = arrayAdapter.getItem(which);
+                        AlertDialog.Builder builderInner = new AlertDialog.Builder(context);
+                        builderInner.setMessage(strName.getName());
+                        actualPrescription.addDrug(strName);
+                        adapter.notifyDataSetChanged();
+                        builderInner.setTitle("Your Selected Item is");
+                        builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.show();
+                    }
+                });
+                builderSingle.show();
+            }
+        });
 
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -113,7 +149,10 @@ public class ListDrugPrescreptionActivity extends AppCompatActivity {
             setResult(Activity.RESULT_OK,returnIntent);
             finish();
         }else {
-             super.onBackPressed();
+             Intent returnIntent = new Intent();
+             returnIntent.putExtra("Prescription", actualPrescription);
+             setResult(Activity.RESULT_OK,returnIntent);
+             finish();
          }
     }
 }

@@ -3,12 +3,15 @@ package com.chakibtemal.fr.patientfollow;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 import Modele.DataStorage.DataBase;
 import Modele.adapter.AdapterPrescription;
@@ -49,6 +52,8 @@ public class ListPerscreptionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent = new Intent(context,ListDrugPrescreptionActivity.class);
+                intent.putParcelableArrayListExtra("Drugs", (ArrayList<? extends Parcelable>) db.getAllDrugs());
+                intent.putExtra("Prescripton", new Prescription());
                 intent.putExtra(REQUEST_CODE, REQUEST_CODE_ADD);
                 startActivityForResult(intent, REQUEST_CODE_ADD);
             }
@@ -61,6 +66,8 @@ public class ListPerscreptionsActivity extends AppCompatActivity {
                 intent.putExtra("Prescripton", db.getPrescriptionList().get(i));
                 intent.putExtra(REQUEST_CODE, REQUEST_CODE_UPDATE);
                 intent.putExtra("idActualPrescription", i );
+                intent.putParcelableArrayListExtra("Drugs", (ArrayList<? extends Parcelable>) db.getAllDrugs());
+
                 startActivityForResult(intent, REQUEST_CODE_UPDATE);
             }
         });
@@ -81,12 +88,18 @@ public class ListPerscreptionsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_CODE_ADD && resultCode == RESULT_OK) {
-            this.db.getPrescriptionList().add((Prescription) data.getParcelableExtra("Prescription"));
-
+            Prescription prescription = (Prescription) data.getParcelableExtra("Prescription");
+            if (prescription.getDrugList().size() != 0){
+                this.db.getPrescriptionList().add(prescription);
+            }
         }else if (requestCode == REQUEST_CODE_UPDATE && resultCode == RESULT_OK){
             Prescription prescription = (Prescription) data.getParcelableExtra("Prescription");
             int id = data.getIntExtra("idActualPrescription", 22);
             db.updatePrescription(prescription, id);
+
+            if (prescription.getDrugList().size() == 0){
+                db.removePrescreption(id);
+            }
         }
         adapter.notifyDataSetChanged();
     }
