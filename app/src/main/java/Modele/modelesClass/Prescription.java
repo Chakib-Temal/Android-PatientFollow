@@ -28,6 +28,15 @@ public class Prescription implements Parcelable {
         this.drugList.add(drug);
     }
 
+    public void updateDrug(int id, Drug drug){
+        this.drugList.set(id , drug);
+    }
+
+    public Prescription addDrugs(Drug drug){
+        this.addDrug(drug);
+        return this;
+    }
+
     public boolean isActivated() {
         return isActivated;
     }

@@ -43,6 +43,10 @@ public class DataBase implements Parcelable {
         return PrescriptionList;
     }
 
+    public String getOldNameOfDrug(int id) {
+        return this.getAllDrugs().get(id).getName();
+    }
+
     public void setDrugsList(List<Prescription> drugsList) {
         this.PrescriptionList = drugsList;
     }
@@ -91,8 +95,8 @@ public class DataBase implements Parcelable {
         this.allDrugs.add(doliprane);
         this.allDrugs.add(lyrica);
 
-        this.PrescriptionList.add(new Prescription().populateDrugs(this.allDrugs));
-        this.PrescriptionList.add(new Prescription().populateDrugs(this.allDrugs));
+        this.PrescriptionList.add(new Prescription().addDrugs(doliprane).addDrugs(lyrica));
+        this.PrescriptionList.add(new Prescription().addDrugs(lyrica).addDrugs(doliprane));
     }
 
 

@@ -97,7 +97,17 @@ public class ListDrugsActivity extends AppCompatActivity {
         }else if (requestCode == REQUEST_CODE_UPDATE && resultCode == RESULT_OK){
             Drug drug = (Drug) data.getParcelableExtra("Drug");
             int id = data.getIntExtra("idActualDrug", 1000);
+            String nameOldDrug = db.getOldNameOfDrug(id);
+
             db.updateDrug(drug, id);
+
+            for (int i = 0; i <  db.getPrescriptionList().size(); i++){
+                for (int j = 0; j < db.getPrescriptionList().get(i).getDrugList().size(); j++ ){
+                    if (nameOldDrug.equals(db.getPrescriptionList().get(i).getDrugList().get(j).getName())){
+                        db.getPrescriptionList().get(i).getDrugList().set(j, drug);
+                    }
+                }
+            }
         }
 
         adapter.notifyDataSetChanged();
