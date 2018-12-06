@@ -140,16 +140,6 @@
 
             >
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:text="@string/changePicture"
-                android:onClick="changePicture"/>
-
-
-            <Button
                 android:id="@+id/saveButton"
                 android:text="@string/save"
                 android:layout_width="match_parent"

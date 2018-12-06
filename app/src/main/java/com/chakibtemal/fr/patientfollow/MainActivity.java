@@ -1,9 +1,14 @@
 package com.chakibtemal.fr.patientfollow;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,8 +19,8 @@ import java.util.List;
 
 import Modele.DataStorage.DataBase;
 import Modele.Ressources.Ressources;
-import Modele.modelesClass.Drug;
 import Modele.modelesClass.Prescription;
+import Modele.savaPicture.SavePictureHelper;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,19 +41,11 @@ public class MainActivity extends AppCompatActivity {
             this.db = (DataBase) getIntent().getExtras().getParcelable(Ressources.getNameOfRessource(this, R.string.DATA_BASE));
         } else {
             deleteAllPictures();
+            addDefaultImage();
             /**
              * in db instance of DataBase we store all data of applications
              */
             this.db = new DataBase(this);
-        }
-
-
-        for (Prescription actualPerscription : db.getPrescriptionList()){
-            for (Drug actualDrugs : actualPerscription.getDrugList()){
-                System.out.println("------------------------------------------------");
-                System.out.println(actualDrugs.getName());
-                System.out.println("------------------------------------------------");
-            }
         }
 
     }
@@ -102,4 +99,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    public void addDefaultImage(){
+        SavePictureHelper savePictureHelper = new SavePictureHelper(this);
+        Bitmap finalBitmap = BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.drug720);
+        String nameDefaultImage = savePictureHelper.saveImage(finalBitmap);
+        SystemClock.sleep(500);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("defaultName", nameDefaultImage);
+        editor.commit();
+
+    }
+
 }

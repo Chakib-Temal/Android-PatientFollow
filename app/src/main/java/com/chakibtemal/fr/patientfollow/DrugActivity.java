@@ -3,9 +3,11 @@ package com.chakibtemal.fr.patientfollow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -62,6 +64,11 @@ public class DrugActivity extends AppCompatActivity {
             this.nameDrugEditText.setHint("add name...");
             this.actualDrug = new Drug();
             this.takingTimeEditText.setHint("exemple : 8/10/14");
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            String nameDefaultPicture = preferences.getString("defaultName", "FFFFFF");
+            Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/Pictures/" + nameDefaultPicture);
+            this.drugImageView.setImageBitmap(bitmap);
+            this.actualDrug.setNamePhoto(nameDefaultPicture);
 
         }
         else if (REQUEST_CODE_VALUE == REQUEST_CODE_UPDATE){
@@ -94,6 +101,16 @@ public class DrugActivity extends AppCompatActivity {
             });
 
         }
+
+        this.drugImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
+            }
+        });
     }
 
     /**
@@ -138,13 +155,6 @@ public class DrugActivity extends AppCompatActivity {
         }
     }
 
-    public void changePicture(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -159,6 +169,5 @@ public class DrugActivity extends AppCompatActivity {
     public void SaveImage(Bitmap finalBitmap) {
         SavePictureHelper savePictureHelper = new SavePictureHelper(context);
         actualDrug.setNamePhoto(savePictureHelper.saveImage(finalBitmap));
-
     }
 }
