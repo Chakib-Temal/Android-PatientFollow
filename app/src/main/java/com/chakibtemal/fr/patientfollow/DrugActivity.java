@@ -73,7 +73,6 @@ public class DrugActivity extends AppCompatActivity {
             this.descriptionDrugEditText.setText(actualDrug.getDescription());
             this.typeDrugEditText.setText(actualDrug.getType());
             this.frequecyDrugEditText.setText(Integer.toString(actualDrug.getFrequencyPerDay()));
-
             String timeToTake= "";
             for (int i=0 ; i < actualDrug.getTimeToTake().size(); i++){
                 timeToTake += Integer.toString(actualDrug.getTimeToTake().get(i)) + " H / ";
@@ -83,6 +82,7 @@ public class DrugActivity extends AppCompatActivity {
             String uri = actualDrug.getNamePhoto();
             Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/Pictures/" + uri);
             this.drugImageView.setImageBitmap(bitmap);
+            this.takingTimeEditText.setFocusable(false);
 
             this.takingTimeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
